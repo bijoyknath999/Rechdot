@@ -11,6 +11,7 @@ import com.app.rdot.adapters.SliderAdapter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -35,6 +36,9 @@ public class Home extends AppCompatActivity {
             R.drawable.slider_2,
             R.drawable.slider_3
     };
+
+    private List<Pair<Integer, String>> services = new ArrayList<>();
+
     private ImageView[] dots;
 
     @Override
@@ -45,33 +49,22 @@ public class Home extends AppCompatActivity {
         getWindow().setNavigationBarColor(Color.TRANSPARENT);
         setContentView(R.layout.activity_home);
 
+        // Add images with titles to the list
+        services.add(new Pair<>(R.drawable.ic_phone, "Mobile"));
+        services.add(new Pair<>(R.drawable.ic_dth, "DTH"));
+        services.add(new Pair<>(R.drawable.ic_electricity, "Electricity"));
+        services.add(new Pair<>(R.drawable.ic_card, "Credit Card\nPayment"));
+        services.add(new Pair<>(R.drawable.ic_phone, "Zip\nRepayment"));
+        services.add(new Pair<>(R.drawable.ic_wifi, "LPG Booking"));
+        services.add(new Pair<>(R.drawable.ic_electricity, "LIC/Insurance"));
+        services.add(new Pair<>(R.drawable.ic_electricity, "Google Play\nRecharge"));
         // Initialize Slider (ViewPager)
         slider = findViewById(R.id.slider);
-        // You can set up a PagerAdapter for your slider
-
-        // Initialize Smart Menu Layout
-        Button reportsBtn = findViewById(R.id.reportsBtn);
-        Button marginBtn = findViewById(R.id.marginBtn);
-        Button ledgersBtn = findViewById(R.id.ledgersBtn);
-        Button analyticsBtn = findViewById(R.id.analyticsBtn);
-
-        reportsBtn.setOnClickListener(view -> {
-            // Reports action
-        });
-        marginBtn.setOnClickListener(view -> {
-            // Margin action
-        });
-        ledgersBtn.setOnClickListener(view -> {
-            // Ledgers action
-        });
-        analyticsBtn.setOnClickListener(view -> {
-            // Analytics action
-        });
 
         // Initialize RecyclerView for Service Layout
         RecyclerView serviceRecyclerView = findViewById(R.id.serviceRecyclerView);
         serviceRecyclerView.setLayoutManager(new GridLayoutManager(this, 4));
-        ServiceAdapter serviceAdapter = new ServiceAdapter(getDummyServices());
+        ServiceAdapter serviceAdapter = new ServiceAdapter(services);
         serviceRecyclerView.setAdapter(serviceAdapter);
 
 
@@ -139,13 +132,5 @@ public class Home extends AppCompatActivity {
         };
 
         handler.postDelayed(runnable, 3000);
-    }
-
-    private List<String> getDummyServices() {
-        List<String> services = new ArrayList<>();
-        for (int i = 1; i <= 12; i++) {
-            services.add("Service " + i);
-        }
-        return services;
     }
 }
